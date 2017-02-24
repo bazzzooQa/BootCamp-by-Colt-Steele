@@ -1,0 +1,38 @@
+#wrap {
+	width: 80%;
+	max-width: 800px;
+	margin: 10px auto 0 auto;
+	border: 20px solid #A8B2B7;
+	padding: 0 1.5%;
+}
+
+.date p {
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #1F648E;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	letter-spacing: 5px;
+}
+.name {
+	margin-top: 0;
+}
+
+h1 {
+	color: #1E2837;
+	font-family: 'Caveat Brush', cursive;
+	margin-top: 0;
+}
+
+.content {
+	font-family: 'Indie Flower', cursive;
+}
+
+.post {
+	border-bottom: 1px solid #A8B2B7;
+	margin-bottom: 5%;
+}
+
+.content p:nth-of-type(1) {
+	border-left: 3px solid #A8B2B7;
+	padding-left: 1%;
+}

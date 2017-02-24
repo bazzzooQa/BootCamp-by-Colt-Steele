@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Color Game</title>
+	<style type="text/css">
+		body {
+				margin: 0;
+				background-color: #232323;
+				font-family: 'Montserrat','Avenir';
+				text-transform: uppercase;
+			}
+
+			.square {
+				width: 30%;
+				background: purple;
+				padding-bottom: 30%;
+				float: left;
+				margin: 1.66%;
+				border-radius: 15%;
+				transition: background 0.6s;
+				--webkit-transition: background 0.6s;
+				--moz-transition: background 0.6s;
+			}
+
+			#container {
+				max-width: 600px;
+				margin: 20px auto; 
+			}
+
+			h1 {
+				color: white;
+				text-align: center;
+				background: steelblue;
+				margin: 0;
+				font-weight: normal;
+				line-height: 1.1;
+				padding: 20px 0;
+			}
+
+			#stripe {
+				background: white;
+				height: 30px;
+				text-align: center;
+				color: black;
+				padding: 0 auto;
+			}
+
+			.selected {
+				color: white;
+				background: steelblue;
+			}
+
+			#colorDisplay {
+				font-size: 200%;
+			}
+
+			button {
+				border: none;
+				background: none;
+				text-transform: uppercase;
+				height: 100%;
+				font-weight: 700;
+				color: steelblue;
+				letter-spacing: 1px;
+				font-size: inherit;
+				transition: all 0.5s;
+				--webkit-transition: all 0.5s;
+				--moz-transition: all 0.5s;
+				outline: none;
+			}
+
+			button:hover {
+				color: white;
+				background: steelblue;
+			}
+
+			#message {
+				font-size: 75%;
+				display: inline-block;
+				width: 15%;
+			}</style>
+</head>
+<body>
+<h1>The Great <br>
+<span id='colorDisplay'>RGB</span><br>
+Color Game</h1>
+	<div id='stripe'>
+		<button id='reset'>New Colors</button>
+		<span id='message'></span>
+		<button class='mode'>Easy</button>
+		<button class='mode selected'>Hard</button>
+	</div>
+	<div id='container'>
+		<div class='square'></div>
+		<div class='square'></div>
+		<div class='square'></div>
+		<div class='square'></div>
+		<div class='square'></div>
+		<div class='square'></div>
+	</div>
+
+<script type="text/javascript">
+	var numSquares = 6;
+
+	var colors = generateRandomColors(numSquares);
+
+
+	var squares = document.querySelectorAll ('.square');
+	var pickedColor = pickColor();
+	var colorDisplay = document.getElementById('colorDisplay');
+	var messageDisplay = document.querySelector('#message');
+	var h1 = document.querySelector('h1');
+	var resetButton = document.querySelector('#reset');
+	var modeButtons = document.querySelectorAll('.mode');
+
+	for (var i = 0; i < modeButtons.length; i++) {
+		modeButtons[i].addEventListener('click', function () {
+			modeButtons[0].classList.remove('selected');
+			modeButtons[1].classList.remove('selected');
+			this.classList.add('selected');
+
+			this.textContent === 'Easy' ? numSquares = 3: numSquares = 6;
+			reset();
+		})
+	}
+
+	function reset () {
+		colors = generateRandomColors(numSquares)
+		//pick a new random color from array
+		pickedColor = pickColor();
+		//change colorDisplay to match picked color
+		colorDisplay.textContent = pickedColor;
+		//change colors of square
+		for (var i = 0; i < squares.length; i++) {
+			if(colors[i]) {
+				squares[i].stylebackground = colors[i];
+				squares[i].style.display = 'block';
+			} else {
+					squares[i].style.display = 'none';
+			}
+			//add initial colors to squares
+			squares[i].style.background = colors[i];
+		}
+		resetButton.textContent = 'New Colors';
+		h1.style.background = 'steelblue';
+		messageDisplay.textContent = ''; 
+	}
+
+	// easyBtn.addEventListener('click', function () {
+	// 	numSquares = 3;
+	// 	this.classList.add('selected');
+	// 	hardBtn.classList.remove('selected');
+	// 	colors = generateRandomColors(numSquares);
+	// 	pickedColor = pickColor();
+	// 	colorDisplay.textContent = pickedColor;
+	// 	for (var i = 0; i < squares.length; i++) {
+	// 		if (colors[i]) {
+	// 			squares[i].style.background = colors[i];
+	// 		}
+	// 		else {
+	// 			squares[i].style.display = 'none';
+	// 		}
+	// 	}
+	// });
+	// hardBtn.addEventListener('click', function () {
+	// 	numSquares = 6;
+	// 	this.classList.add('selected');
+	// 	easyBtn.classList.remove('selected');
+	// 	colors = generateRandomColors(numSquares);
+	// 	pickedColor = pickColor();
+	// 	colorDisplay.textContent = pickedColor;
+	// 	for (var i = 0; i < squares.length; i++) {
+	// 		squares[i].style.background = colors[i];
+	// 		squares[i].style.display = 'block';
+	// 		}
+	// 	}
+	// );
+
+	resetButton.addEventListener('click', function () {
+		reset();
+	});
+
+	colorDisplay.textContent = pickedColor;
+
+	for (var i = 0; i < squares.length; i++) {
+		//add initial colors to squares
+		squares[i].style.background = colors[i];
+
+		//add click listeners to square
+		squares[i].addEventListener('click', function() {
+			//grab color of clicked square
+			var clickedColor = this.style.background;
+			//compare color to pickedColor
+			if (clickedColor === pickedColor) {
+				messageDisplay.textContent = 'Correct!';
+				changeColors(clickedColor);
+				h1.style.background = pickedColor;
+				resetButton.textContent = 'Play Again?'
+
+			}
+			else {
+				this.style.background = '#232323';
+				messageDisplay.textContent = 'Try Again!';
+			}
+		});
+	}
+
+	function changeColors (color) {
+		//loop throug all squares
+		for (var i = 0; i < squares.length; i++) {
+		//change each color to match given color
+		squares[i].style.background = color;
+		}
+	}
+
+	function pickColor () {
+		var random = Math.floor(Math.random() * colors.length);
+		return colors[random];
+	}
+
+	function generateRandomColors(num) {
+		//make an array
+		var arr = [];
+		//add num random colors to arr
+		for (var i = 0; i < num; i++) {
+			//get random color and push to the array
+			arr[i] = randomColor();
+		}
+		//return that array
+		return arr;
+	}
+
+	function randomColor () {
+		//pick a 'red' from 0 - 255
+		var r = Math.floor(Math.random() * 256);
+		//pick a 'green' from 0 - 255
+		var g = Math.floor(Math.random() * 256);
+		//pick a 'blue' from 0 - 255
+		var b = Math.floor(Math.random() * 256);
+		return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+	}
+</script>	
+</body>
+</html>

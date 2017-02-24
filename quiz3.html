@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HomeWork 3</title>
+</head>
+<body>
+<h1>Register</h1>
+<form>
+	<div>
+		<label for='username'>
+		First name:
+		</label>
+			<input id="username" type="text" name="username" placeholder="John" required="">
+		<label for='userLname'>
+		Last name:
+		</label>
+			<input id="userLname" type="text" name="userLname" placeholder="Smith" required="">
+	</div>
+
+	<div>
+		<label for='male'>Male</label>
+			<input id="male" type="radio" name="Gender" value="male">
+		<label for='female'>Female</label>
+			<input id="female" type="radio" name="Gender" value="female">
+		<label for='other'>Other</label>
+			<input id="other" type="radio" name="Gender" value="other">
+	</div>
+
+	<div>
+		<label for='Email'>
+		Email:
+		</label>
+			<input id="Email" type="Email" name="Email" placeholder="m@m.com" required="">
+		<label for='password'>
+		Password:
+		</label>
+			<input id="password" type="password" name="password" placeholder="****" pattern=".{5,10}" required title="Please enter 5 to 10 characters">
+	</div>
+
+	<div>
+		Birthday:
+		<select name="Month">
+			<option>Jan</option>
+			<option>Feb</option>
+			<option>Mar</option>
+		</select>
+		<select name="Day">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+		</select>
+		<select name="Year">
+			<option>1988</option>
+			<option>1989</option>
+			<option>1990</option>
+		</select>
+	</div>
+
+	<div>
+		I agree to the terms and conditions
+		<input type="checkbox" name="agree" value="1">
+	</div>
+
+	<input type="submit" name="button">
+
+
+</form>
+
+
+</body>
+</html>
